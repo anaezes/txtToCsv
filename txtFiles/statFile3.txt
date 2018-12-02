@@ -1,0 +1,20 @@
+30/nov/2018 18:23:29
+RngSeed: 1543602209253
+DeathRate: 0.1
+ImmigrantChanceCooperateWithDifferent: 0.8360314451129726
+ImmigrantChanceCooperateWithSame: 0.5829175357881136
+ImmigrantsPerDay: 1
+InitialPtr: 0.1196039074777718
+MutationRate: 0.006430519143644987
+PlotResolution: 10
+SmartChoice: false
+SpaceSize: 50
+TickDelay: 0
+
+"tick", "Green - CC", "Red - CD", "Orange - DC", "Gray - DD"
+15.0, 1086.0, 212.0, 797.0, 149.0
+29.0, 1039.0, 196.0, 764.0, 146.0
+43.0, 1020.0, 207.0, 747.0, 145.0
+57.0, 1010.0, 207.0, 758.0, 150.0
+71.0, 1017.0, 212.0, 752.0, 159.0
+85.0, 1012.0, 221.0, 751.0, 165.0

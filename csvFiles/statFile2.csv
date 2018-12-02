@@ -1,0 +1,13 @@
+RngSeed,1543602197459
+DeathRate,0.1
+ImmigrantChanceCooperateWithDifferent,0.6387662074784026
+ImmigrantChanceCooperateWithSame,0.6714868456880128
+ImmigrantsPerDay,1
+InitialPtr,0.17315432998597344
+MutationRate,3.9556668142716857E-4
+PlotResolution,10
+SmartChoice,true
+SpaceSize,50
+TickDelay,0
+917.0,599.0,487.0,260.0
+1343.0,684.0,179.0,24.0
