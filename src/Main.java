@@ -6,23 +6,45 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        if (args.length != 1) {
-            System.out.println("Please insert number of txt files...");
-            return;
+        final String dir = System.getProperty("user.dir");
+
+        File folderTxt =  Paths.get(dir, "txtFiles").toFile();
+        File[] listOfFiles = folderTxt.listFiles();
+
+        File fileCSV = new File(dir +"/csvFiles/statFile.csv");
+
+        Boolean firstTime = false;
+
+        // if file doesnt exists, then create it
+        if (!fileCSV.exists()) {
+            fileCSV.createNewFile();
+            firstTime = true;
         }
 
-        final String dir = System.getProperty("user.dir");
-        File fileCSV = Paths.get(dir, "csvFiles", "statFile.csv").toFile();
-        PrintWriter pw = new PrintWriter(fileCSV);
-        pw.print("RngSeed,DeathRate,ImmigrantChanceCooperateWithDifferent,ImmigrantChanceCooperateWithSame,ImmigrantsPerDay,InitialPtr,MutationRate,PlotResolution,SmartChoice,SpaceSize,TickDelay,CC,CD,DC,DD,CC-end,CD-end,DC-end,DD-end\n");
-        for (int i = 1; i <= Integer.valueOf(args[0]); i++) {
-            File fileTXT = Paths.get(dir, "txtFiles", "statFile" + i + ".txt").toFile();
-            readWriteToFile(fileTXT, pw);
+        // true = append file
+        FileWriter fw = new FileWriter(fileCSV.getAbsoluteFile(), true);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        if(firstTime) {
+            bw.write("RngSeed,DeathRate,ImmigrantChanceCooperateWithDifferent,ImmigrantChanceCooperateWithSame,ImmigrantsPerDay,InitialPtr,MutationRate,PlotResolution,SmartChoice,SpaceSize,TickDelay,CC,CD,DC,DD,CC-end,CD-end,DC-end,DD-end\n");
         }
-        pw.close();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                System.out.println(file.getName());
+                readWriteToFile(file, bw);
+                bw.write('\n');
+            }
+        }
+
+        if (bw != null)
+            bw.close();
+
+        if (fw != null)
+            fw.close();
     }
 
-    public static void readWriteToFile(File fileTXT, PrintWriter pw) throws IOException {
+    public static void readWriteToFile(File fileTXT, BufferedWriter bw) throws IOException {
         FileInputStream fis = new FileInputStream(fileTXT);
 
         //Construct BufferedReader from InputStreamReader
@@ -37,20 +59,20 @@ public class Main {
                 String d[] = line.split(": ");
                 if(i == 9){
                     if(d[1].equals("false")){
-                        pw.print("0,");
+                        bw.write("0,");
                     }else{
-                        pw.print("1,");
+                        bw.write("1,");
                     }
                 }else{
-                    pw.print(d[1] + ",");
+                    bw.write(d[1] + ",");
                 }
             }
 
             if (i == 14) {
                 System.out.println(line);
                 String d[] = line.split(", ");
-                pw.print(String.join(",", Arrays.copyOfRange(d, 1, 5)));
-                pw.print(',');
+                bw.write(String.join(",", Arrays.copyOfRange(d, 1, 5)));
+                bw.write(',');
             }
 
             beforeLine = line;
@@ -58,7 +80,7 @@ public class Main {
         }
         System.out.println(beforeLine);
         String d[] = beforeLine.split(", ");
-        pw.println(String.join(",", Arrays.copyOfRange(d, 1, 5)));
+        bw.write(String.join(",", Arrays.copyOfRange(d, 1, 5)));
         br.close();
     }
 }
